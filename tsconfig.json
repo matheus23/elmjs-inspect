@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        // "target": "ES2019",
+        "downlevelIteration": true,
+        "outDir": "dist"
+    },
+    "files": [
+        "src/index.ts"
+    ]
+}
