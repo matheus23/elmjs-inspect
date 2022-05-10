@@ -2,6 +2,9 @@
   "name": "sizes",
   "version": "1.0.0",
   "main": "src/index.ts",
+  "bin": {
+    "elmjs-inspector": "src/index.ts"
+  },
   "license": "MIT",
   "scripts": {
     "repl": "ts-node --project .",
@@ -10,10 +13,13 @@
   "type": "module",
   "devDependencies": {
     "@types/esprima": "^4.0.2",
+    "@types/estree": "^0.0.51",
     "@types/node": "^13.11.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "esprima": "^4.0.1"
+    "commander": "^9.2.0",
+    "esprima": "^4.0.1",
+    "node-estree": "^3.1.0"
   }
 }
