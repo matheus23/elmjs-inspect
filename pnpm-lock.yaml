@@ -1,0 +1,65 @@
+lockfileVersion: 5.4
+
+specifiers:
+  '@types/esprima': ^4.0.2
+  '@types/estree': ^0.0.51
+  '@types/node': ^13.11.0
+  commander: ^9.2.0
+  esprima: ^4.0.1
+  node-estree: ^3.1.0
+  typescript: ^3.8.3
+
+dependencies:
+  commander: 9.2.0
+  esprima: 4.0.1
+  node-estree: 3.1.0
+
+devDependencies:
+  '@types/esprima': 4.0.3
+  '@types/estree': 0.0.51
+  '@types/node': 13.13.52
+  typescript: 3.9.10
+
+packages:
+
+  /@slimio/is/1.5.1:
+    resolution: {integrity: sha512-xQ0AgodIE8nHYy508AVmpxqnIr/Ytyz5Xm7I6NQU33+RvDzs94T9c0dTnUWuariByLr1geXXe6kMaTM9TcOIEA==}
+    engines: {node: '>=10'}
+    dev: false
+
+  /@types/esprima/4.0.3:
+    resolution: {integrity: sha512-jo14dIWVVtF0iMsKkYek6++4cWJjwpvog+rchLulwgFJGTXqIeTdCOvY0B3yMLTaIwMcKCdJ6mQbSR6wYHy98A==}
+    dependencies:
+      '@types/estree': 0.0.51
+    dev: true
+
+  /@types/estree/0.0.51:
+    resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+    dev: true
+
+  /@types/node/13.13.52:
+    resolution: {integrity: sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==}
+    dev: true
+
+  /commander/9.2.0:
+    resolution: {integrity: sha512-e2i4wANQiSXgnrBlIatyHtP1odfUp0BbV5Y5nEGbxtIrStkEOAAzCUirvLBNXHLr7kwLvJl6V+4V3XV9x7Wd9w==}
+    engines: {node: ^12.20.0 || >=14}
+    dev: false
+
+  /esprima/4.0.1:
+    resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
+    engines: {node: '>=4'}
+    hasBin: true
+    dev: false
+
+  /node-estree/3.1.0:
+    resolution: {integrity: sha512-Au8RrdfNCbvzT3/POUQjQnArLGpqXpuLrK0fU0acGSynjRA1CFWQ6mExO8HPR7mc9Q4RqemNJg/yTvm3E2nBqw==}
+    dependencies:
+      '@slimio/is': 1.5.1
+    dev: false
+
+  /typescript/3.9.10:
+    resolution: {integrity: sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
