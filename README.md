@@ -4,7 +4,7 @@
 
 ```sh
 npm build
-node dist/index.js analyse <filename>
+node dist/index.js analyze <filename>
 ```
 
 ## TODO
