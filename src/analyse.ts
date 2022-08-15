@@ -61,5 +61,5 @@ export async function analyse(elmOutputJsFilePath: string) {
         Console.log(`${pct(rangeSize(range), rangeSize(size))}: ${name}`);
     });
     const rangeSum = infos.map(({ range }) => rangeSize(range)).reduce((a, b) => a + b, 0);
-    Console.log(`Range sum: ${rangeSum} total: ${rangeSize(size)}, analized ${pct(rangeSum, rangeSize(size))}`);
+    Console.log(`Range sum: ${rangeSum} total: ${rangeSize(size)}, analyzed ${pct(rangeSum, rangeSize(size))}`);
 }
