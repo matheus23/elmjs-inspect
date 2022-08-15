@@ -13,25 +13,25 @@ npm link
 Size contribution of each function
 
 ```
-elmjs-size elm.js
+elmjs-inspect elm.js
 ```
 
 Size contribution by modules
 
 ```
-elmjs-size --summary=module elm.js
+elmjs-inspect --summary=module elm.js
 ```
 
 Size contribution by package
 
 ```
-elmjs-size --summary=package elm.js
+elmjs-inspect --summary=package elm.js
 ```
 
 Size contribution of only the project's modules
 
 ```
-elmjs-size --summary=project elm.js
+elmjs-inspect --summary=project elm.js
 ```
 
 ## TODO
