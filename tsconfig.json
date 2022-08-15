@@ -4,10 +4,8 @@
         "module": "ES6",
         "downlevelIteration": true,
         "moduleResolution": "node",
-        "outDir": "dist"
+        "outDir": "bin",
+        "lib": ["ES2021.String"]
     },
-    "files": [
-        "src/analyse.ts",
-        "src/index.ts"
-    ]
+    "files": ["src/analyse.ts", "src/index.ts"]
 }
