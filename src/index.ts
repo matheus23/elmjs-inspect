@@ -9,10 +9,13 @@ program
   .version("1.0.0");
 
 program
-  .command("analyze")
+  .option(
+    "-s, --summary [value]",
+    "Display summary. Possible values: module, package, project"
+  )
   .argument("<filename>", "The file to analyze")
-  .action((filename) => {
-    analyse(filename);
+  .action((filename, opts) => {
+    analyse(filename, opts);
   });
 
 program.parse();
