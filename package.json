@@ -1,16 +1,17 @@
 {
-  "name": "sizes",
+  "name": "elmjs-inspect",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "bin/index.js",
+  "type": "module",
   "bin": {
     "elmjs-inspect": "bin/index.js"
   },
   "license": "MIT",
   "scripts": {
     "repl": "ts-node --project .",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
-  "type": "module",
   "devDependencies": {
     "@types/esprima": "^4.0.2",
     "@types/estree": "^0.0.51",
