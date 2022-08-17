@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import { program } from "commander";
-import { analyse } from "./analyse.js";
+import { analyze } from "./analyze.js";
 
 program
-  .name("elmjs-inspector")
-  .description("Analyse your elm.js file size with this tool.")
+  .name("elmjs-inspect")
+  .description("Analyze your elm.js file size with this tool.")
   .version("1.0.0");
 
 program
@@ -15,7 +15,7 @@ program
   )
   .argument("<filename>", "The file to analyze")
   .action((filename, opts) => {
-    analyse(filename, opts);
+    analyze(filename, opts);
   });
 
 program.parse();

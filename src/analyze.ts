@@ -70,7 +70,7 @@ function localName(name: string) {
         : name.slice(16, name.lastIndexOf("$")).replaceAll("$", ".");
 }
 
-export async function analyse(elmOutputJsFilePath: string, opts: any) {
+export async function analyze(elmOutputJsFilePath: string, opts: any) {
     const file = await promisify(FS.readFile)(elmOutputJsFilePath);
     const parsed = Esprima.parseScript(file.toString(), { range: true });
     const size = parsed.range;
@@ -114,7 +114,7 @@ export async function analyse(elmOutputJsFilePath: string, opts: any) {
         .map(({ range }) => rangeSize(range))
         .reduce((a, b) => a + b, 0);
     Console.log(
-        `Range sum: ${rangeSum} total: ${rangeSize(size)}, analized ${pct(
+        `Range sum: ${rangeSum} total: ${rangeSize(size)}, analyzed ${pct(
             rangeSum,
             rangeSize(size)
         )}`
