@@ -6,7 +6,7 @@ import { analyze } from "./analyze.js";
 program
   .name("elmjs-inspect")
   .description("Analyze your elm.js file size with this tool.")
-  .version("1.0.0");
+  .version("1.0.1");
 
 program
   .option(
