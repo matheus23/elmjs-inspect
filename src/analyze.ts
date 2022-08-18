@@ -53,10 +53,20 @@ function pct(value: number, of: number) {
     return `${Number((value / of) * 100).toFixed(3)}%`;
 }
 
+function prettyName(name: string) {
+    if (!name.startsWith("$")) {
+        return `Kernel Code: ${name}`;
+    }
+    const packageName = name.split("$").slice(1, 3).join("/");
+    const moduleName = name.split("$").slice(3).join(".");
+    return `${packageName}: ${moduleName}`;
+}
+
 function moduleName(name: string) {
+    const prettifiedName = prettyName(name);
     return !name.startsWith("$")
         ? "Kernel Code"
-        : name.slice(0, name.lastIndexOf("$"));
+        : prettifiedName.slice(0, prettifiedName.lastIndexOf("."));
 }
 
 function packageName(name: string) {
@@ -107,7 +117,9 @@ export async function analyze(elmOutputJsFilePath: string, opts: any) {
     } else {
         infos.sort((a, b) => rangeSize(b.range) - rangeSize(a.range));
         infos.forEach(({ name, range }) => {
-            Console.log(`${pct(rangeSize(range), rangeSize(size))}: ${name}`);
+            Console.log(
+                `${pct(rangeSize(range), rangeSize(size))}: ${prettyName(name)}`
+            );
         });
     }
     const rangeSum = infos
