@@ -1,134 +1,27 @@
-import * as FS from "fs";
-import * as Console from "console";
-import { promisify } from "util";
-import * as Esprima from "esprima";
-import * as ESTree from "estree";
+import { promises as FSPromises } from "fs";
+import { log } from "console";
+import { parseScript } from "esprima";
+import { Options } from "./contracts/Options";
+import { rangeSize } from "./utils/rangeSize";
+import { percent } from "./utils/percent";
+import { formatterForFormat } from "./utils/formatterForFormat";
+import { elmJsDefinitions } from "./generators/elmJsDefinitions";
 
-function* yieldElmJsDefinitionInfos(script: Esprima.Program) {
-    for (const statement of yieldElmJsStatements(script)) {
-        yield* yieldFunctionDeclarationInfo(statement);
-        yield* yieldVariableDeclarationInfos(statement);
-    }
-}
+export async function analyze(elmOutputJsFilePath: string, options: Options) {
+  const file = await FSPromises.readFile(elmOutputJsFilePath);
+  const parsed = parseScript(file.toString(), { range: true });
+  const definitions = Array.from(elmJsDefinitions(parsed));
+  const parsedRange = parsed.range;
+  const formatter = formatterForFormat(options.format);
+  const summary = formatter(definitions, options.summary, parsedRange);
+  const rangeSum = definitions
+    .map(({ range }) => rangeSize(range))
+    .reduce((a, b) => a + b, 0);
 
-function* yieldElmJsStatements(script: Esprima.Program) {
-    for (const e of script.body) {
-        if (
-            e.type === "ExpressionStatement" &&
-            e.expression.type === "CallExpression" &&
-            e.expression.callee.type === "FunctionExpression"
-        ) {
-            yield* e.expression.callee.body.body;
-        }
-    }
-}
-
-function* yieldFunctionDeclarationInfo(statement: ESTree.Statement) {
-    if (statement.type === "FunctionDeclaration") {
-        yield {
-            name: statement.id.name,
-            range: statement.range,
-        };
-    }
-}
-
-function* yieldVariableDeclarationInfos(statement: ESTree.Statement) {
-    if (statement.type === "VariableDeclaration") {
-        for (const declaration of statement.declarations) {
-            if (declaration.id.type === "Identifier") {
-                yield {
-                    name: declaration.id.name,
-                    range: declaration.range,
-                };
-            }
-        }
-    }
-}
-
-function rangeSize([start, end]) {
-    return end - start;
-}
-
-function pct(value: number, of: number) {
-    return `${Number((value / of) * 100).toFixed(3)}%`;
-}
-
-function prettyName(name: string) {
-    if (!name.startsWith("$")) {
-        return `Kernel Code: ${name}`;
-    }
-    const packageName = name.split("$").slice(1, 3).join("/");
-    const moduleName = name.split("$").slice(3).join(".");
-    return `${packageName}: ${moduleName}`;
-}
-
-function moduleName(name: string) {
-    const prettifiedName = prettyName(name);
-    return !name.startsWith("$")
-        ? "Kernel Code"
-        : prettifiedName.slice(0, prettifiedName.lastIndexOf("."));
-}
-
-function packageName(name: string) {
-    return !name.startsWith("$")
-        ? "Kernel Code"
-        : name.split("$").slice(1, 3).join("/");
-}
-function localName(name: string) {
-    return !name.startsWith("$author")
-        ? "Dependencies"
-        : name.slice(16, name.lastIndexOf("$")).replaceAll("$", ".");
-}
-
-export async function analyze(elmOutputJsFilePath: string, opts: any) {
-    const file = await promisify(FS.readFile)(elmOutputJsFilePath);
-    const parsed = Esprima.parseScript(file.toString(), { range: true });
-    const size = parsed.range;
-    const infos = Array.from(yieldElmJsDefinitionInfos(parsed));
-
-    if (opts.summary != undefined) {
-        const summary = infos.reduce((prev, { name, range }) => {
-            let key;
-
-            switch (opts.summary) {
-                case "package": {
-                    key = packageName(name);
-                    break;
-                }
-                case "project": {
-                    key = localName(name);
-                    break;
-                }
-                default: {
-                    key = moduleName(name);
-                    break;
-                }
-            }
-
-            prev.set(key, (prev.get(key) ?? 0) + rangeSize(range));
-
-            return prev;
-        }, new Map<string, number>());
-        const entries = [...summary.entries()];
-        entries.sort((a, b) => b[1] - a[1]);
-        entries.forEach(([name, range]) => {
-            Console.log(`${pct(range, rangeSize(size))}: ${name}`);
-        });
-    } else {
-        infos.sort((a, b) => rangeSize(b.range) - rangeSize(a.range));
-        infos.forEach(({ name, range }) => {
-            Console.log(
-                `${pct(rangeSize(range), rangeSize(size))}: ${prettyName(name)}`
-            );
-        });
-    }
-    const rangeSum = infos
-        .map(({ range }) => rangeSize(range))
-        .reduce((a, b) => a + b, 0);
-    Console.log(
-        `Range sum: ${rangeSum} total: ${rangeSize(size)}, analyzed ${pct(
-            rangeSum,
-            rangeSize(size)
-        )}`
-    );
+  log(summary);
+  log(
+    `Range sum: ${rangeSum} total: ${rangeSize(
+      parsedRange
+    )}, analyzed ${percent(rangeSum, rangeSize(parsedRange))}`
+  );
 }

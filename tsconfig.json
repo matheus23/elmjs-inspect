@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        // "target": "ES2019",
-        "module": "ES6",
-        "downlevelIteration": true,
-        "moduleResolution": "node",
-        "outDir": "bin",
-        "lib": ["ES2021.String"]
-    },
-    "files": ["src/analyze.ts", "src/index.ts"]
+  "compilerOptions": {
+    // "target": "ES2019",
+    "module": "ES6",
+    "downlevelIteration": true,
+    "moduleResolution": "node",
+    "outDir": "bin",
+    "lib": ["ES2021.String"]
+  },
+  "files": ["src/analyze.ts", "src/index.ts"]
 }
